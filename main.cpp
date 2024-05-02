@@ -32,6 +32,12 @@ int main() {
         }
           file.close();
             buf.close();
+    } else if(userAction == "Custom") {
+      userAction = " ";
+      cout << "Please type out the message" << endl;
+      cin >> userAction;
+      buf << userAction;
+      buf.close();
     }
   return 1;
 }

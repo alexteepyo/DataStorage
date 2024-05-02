@@ -4,6 +4,12 @@
 #include <cstdio>
 using namespace std;
 
+class Input {
+  public:
+    
+};
+
+
 int main() {
     int userLine;
     string userFile;
@@ -38,6 +44,10 @@ int main() {
       cin >> userAction;
       buf << userAction;
       buf.close();
+    }
+
+    if(userAction == "Recieve") {
+
     }
   return 1;
 }

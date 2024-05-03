@@ -6,7 +6,17 @@ using namespace std;
 
 class Input {
   public:
-    
+    string userAction;
+    int fileName;
+    fstream buf;
+    fstream file;
+    void sendFile(string fileNameTemp){
+      buf.open("output.txt", ios::app);
+      cout << "Choose a file" << endl;
+      cin >> fileNameTemp;
+      ifstream file(fileNameTemp);
+      buf << file;
+    }
 };
 
 
@@ -16,38 +26,12 @@ int main() {
     string userAction;
     string line;
     fstream buf;
-    buf.open("output.txt", ios::app);
+    Input i;
 
     cout << "Send\nRecieve\nDelete\n" << endl;
     cin >> userAction;
 
     if(userAction == "Send"){
-        userAction = " ";
-        cout << "Send a line or custom text?\nLine\nCustom\n" << endl;
-        cin >> userAction;
-    } if (userAction == "Line"){
-        userAction = " ";
-        cout << "What file?" << endl;
-        cin >> userFile;
-        ifstream file(userFile);
-        cout << "What line?";
-        cin >> userLine;
-         for(int i = 0; i < userLine; ++i) {
-            getline(file, line);
-            buf << line;
-        }
-          file.close();
-            buf.close();
-    } else if(userAction == "Custom") {
-      userAction = " ";
-      cout << "Please type out the message" << endl;
-      cin >> userAction;
-      buf << userAction;
-      buf.close();
+      i.sendFile("input.txt");
     }
-
-    if(userAction == "Recieve") {
-
-    }
-  return 1;
 }

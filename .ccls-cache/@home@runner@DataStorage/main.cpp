@@ -28,16 +28,11 @@ public:
     string userName;
     fstream file;
 
-  void getFile(string fileNameTemp) {
-    fileName = fileNameTemp; // Update the assignment to set the fileName correctly
-    ifstream inputFile(fileName);
-}
-
-void downloadToDesktop() {
-    ifstream inputFile(fileName); // Open the file with the specified fileName
+void downloadToDesktop(string fileNameTemp, string userName) {
+    ifstream inputFile(fileNameTemp.c_str()); // Open the file with the specified fileName
     if (inputFile.is_open()) {
-        ofstream outputFile("C:\\Users\\danny\\Desktop\\" + fileName + ".txt"); // Specify the complete path and file name
         string line;
+        ofstream outputFile("C:\\Users\\" + userName + "\\Desktop\\" + fileNameTemp + "copy" + ".txt"); // Specify the complete path and file name
         while (getline(inputFile, line)) {
             outputFile << line << endl; // Write the content of the file to the output file
         }
@@ -97,8 +92,7 @@ int main() {
         cout << "Enter data to download: ";
         cin.ignore(); // Ignore the previous newline character
         getline(cin, data);
-        i.getFile(userFile);
-        i.downloadToDesktop();
+        i.downloadToDesktop("awdwad.txt", userFile);
     } else if (userAction == "Delete"){
         d.deleteFile(userFile);
     }

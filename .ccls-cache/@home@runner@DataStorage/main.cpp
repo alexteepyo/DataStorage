@@ -1,7 +1,25 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cstdio>
 using namespace std;
+
+class Delete {
+public:
+    string userAction;
+    string userFile;
+    string fileName;
+    fstream file;
+
+    void deleteFile(string fileNameTemp) {
+        cin >> fileNameTemp;
+        if (remove(fileNameTemp.c_str()) != 0) {
+            cout << "Error: Unable to delete the file." << endl;
+        } else {
+            cout << "File deleted successfully." << endl;
+        }
+    }
+};
 
 class Input {
 public:
@@ -10,21 +28,27 @@ public:
     string userName;
     fstream file;
 
-    void getFile(string fileNameTemp) {
-        fileNameTemp = fileName;
-    }
+  void getFile(string fileNameTemp) {
+    fileName = fileNameTemp; // Update the assignment to set the fileName correctly
+    ifstream inputFile(fileName);
+}
 
-    void downloadToDesktop(string data) {
+void downloadToDesktop() {
+    ifstream inputFile(fileName); // Open the file with the specified fileName
+    if (inputFile.is_open()) {
         ofstream outputFile("C:\\Users\\danny\\Desktop\\" + fileName + ".txt"); // Specify the complete path and file name
-        if (outputFile.is_open()) {
-            outputFile << data;
-            outputFile.close();
-            cout << "File downloaded to desktop successfully." << endl;
+        string line;
+        while (getline(inputFile, line)) {
+            outputFile << line << endl; // Write the content of the file to the output file
         }
-        else {
-            cout << "Error: Unable to download the file to desktop." << endl;
-        }
+        inputFile.close();
+        outputFile.close();
+        cout << "File downloaded to desktop successfully." << endl;
     }
+    else {
+        cout << "Error: Unable to download the file to desktop." << endl;
+    }
+}
 };
 
 class Output {
@@ -61,6 +85,7 @@ int main() {
     fstream buf;
     Output o;
     Input i;
+    Delete d;
 
     cout << "Send\nDownload\nDelete\n" << endl;
     cin >> userAction;
@@ -72,8 +97,10 @@ int main() {
         cout << "Enter data to download: ";
         cin.ignore(); // Ignore the previous newline character
         getline(cin, data);
-        i.getFile("fileNameTemp");
-        i.downloadToDesktop(data);
+        i.getFile(userFile);
+        i.downloadToDesktop();
+    } else if (userAction == "Delete"){
+        d.deleteFile(userFile);
     }
 
     return 0;

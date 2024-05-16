@@ -1,7 +1,25 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cstdio>
 using namespace std;
+
+class Delete {
+public:
+    string userAction;
+    string userFile;
+    string fileName;
+    fstream file;
+
+    void deleteFile(string fileNameTemp) {
+        cin >> fileNameTemp;
+        if (remove(fileNameTemp.c_str()) != 0) {
+            cout << "Error: Unable to delete the file." << endl;
+        } else {
+            cout << "File deleted successfully." << endl;
+        }
+    }
+};
 
 class Input {
 public:
@@ -12,6 +30,7 @@ public:
 
   void getFile(string fileNameTemp) {
     fileName = fileNameTemp; // Update the assignment to set the fileName correctly
+    ifstream inputFile(fileName);
 }
 
 void downloadToDesktop() {
@@ -66,6 +85,7 @@ int main() {
     fstream buf;
     Output o;
     Input i;
+    Delete d;
 
     cout << "Send\nDownload\nDelete\n" << endl;
     cin >> userAction;
@@ -79,6 +99,8 @@ int main() {
         getline(cin, data);
         i.getFile(userFile);
         i.downloadToDesktop();
+    } else if (userAction == "Delete"){
+        d.deleteFile(userFile);
     }
 
     return 0;
